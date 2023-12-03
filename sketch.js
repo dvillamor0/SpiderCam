@@ -20,7 +20,7 @@ function draw()
 
     t = (t + dt) % 20;
     const pos = changePos(t);
-    const t1 = (t + 1) % 20;
+    const t1 = (t + 0.4) % 20;
     const posLook = changePos(t1);
 
     //console.log(pos,posLook);
