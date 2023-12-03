@@ -7,26 +7,25 @@ function setup()
 
     windowResized();
 }
+const puntos = [];
 
-let posx = 0;
-let posy = 0;
-let posz = 0;
 let t = 0;
 const dt = 0.004;
 function draw()
 {
     background(100);
-    orbitControl();
-    sphere(10);
-
-    push();
-    translate(-posx, -posy, -posz);
+    
     edificios();
     curves();
-    pop();
 
     t = (t + dt) % 20;
-    changePos(t);
+    const pos = changePos(t);
+    const t1 = (t + 1) % 20;
+    const posLook = changePos(t1);
+
+    //console.log(pos,posLook);
+
+    camera(pos.x, pos.y, pos.z,posLook.x,posLook.y,posLook.z);
 
 }
 
@@ -75,8 +74,6 @@ function setAlturas() {
     }
 }
 
-const puntos = [];
-
 function changePos(t) {
     const tEntero = Math.floor(t);
     const t1 = (tEntero + 1) % 20;
@@ -85,9 +82,11 @@ function changePos(t) {
     const Yx = [puntos[tEntero].x,puntos[t1].x,puntos[t2].x];
     const Yy = [puntos[tEntero].y,puntos[t1].y,puntos[t2].y];
     const Yz = [puntos[tEntero].z,puntos[t1].z,puntos[t2].z];
-    posx = interpolacion(t,X,Yx);
-    posy = interpolacion(t,X,Yy);
-    posz = interpolacion(t,X,Yz);
+    const x = interpolacion(t,X,Yx);
+    const y = interpolacion(t,X,Yy);
+    const z = interpolacion(t,X,Yz);
+
+    return {x:x,y:y,z:z};
 }
 
 function curves() {
